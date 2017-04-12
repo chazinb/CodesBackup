@@ -147,7 +147,10 @@ void AnalysisStop::Loop(TString analysis, TString filename, float luminosity, fl
      
       // Make Z candidates
       //--------------------------------------------------------------------------                       
-    
+       _m2lep[0] = -999;
+       _m2lep[1] = -999;
+       _m2lep[2] = -999; 
+
       if ((AnalysisLeptons[0].flavour + AnalysisLeptons[1].flavour) == 0) _m2lep[0] = (AnalysisLeptons[0].v + AnalysisLeptons[1].v).M();
       if ((AnalysisLeptons[0].flavour + AnalysisLeptons[2].flavour) == 0) _m2lep[1] = (AnalysisLeptons[0].v + AnalysisLeptons[2].v).M(); 
       if ((AnalysisLeptons[1].flavour + AnalysisLeptons[2].flavour) == 0) _m2lep[2] = (AnalysisLeptons[1].v + AnalysisLeptons[2].v).M();
