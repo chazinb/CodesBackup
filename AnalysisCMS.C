@@ -493,9 +493,16 @@ void AnalysisCMS::ApplyWeights()
   if (_sample.EqualTo("DYJetsToTT_MuEle")) _event_weight *= 1.26645;
   if (_sample.EqualTo("Wg_MADGRAPHMLM"))   _event_weight *= !(Gen_ZGstar_mass > 0. && Gen_ZGstar_MomId == 22);
 
-  _event_weight *= (std_vector_lepton_genmatched->at(0)*std_vector_lepton_genmatched->at(1) * std_vector_lepton_genmatched->at(2));
-
-  if (_analysis.EqualTo("WZ")) _event_weight *= std_vector_lepton_genmatched->at(2);
+ // _event_weight *= (std_vector_lepton_genmatched->at(0)*std_vector_lepton_genmatched->at(1) * std_vector_lepton_genmatched->at(2));
+ 
+//Debuging----------------- 
+  //printf( " event: %i",  event);
+  //printf( "lepton genmatched->at(0) %f", std_vector_lepton_genmatched->at(0) ); 
+  //printf ( "lepton_genmatched->at(1) %f",std_vector_lepton_genmatched->at(1) ); 
+  //printf ( "lepton_genmatched->at(2) %f", std_vector_lepton_genmatched->at(2) );
+// ----------------
+ 
+ // if (_analysis.EqualTo("WZ")) _event_weight *= std_vector_lepton_genmatched->at(2);
 
  // _event_weight *= _gen_ptll_weight;
 
@@ -531,6 +538,9 @@ void AnalysisCMS::ApplyWeights()
   float sf_trigger_up = effTrigW_Up;
   float sf_trigger_do = effTrigW_Down;
 
+  //Debuging ------------------------
+  //printf ("sf_trigger %f", sf_trigger); 
+  //---------------------------------
 
   // idiso scale factors
   //----------------------------------------------------------------------------
@@ -557,6 +567,8 @@ void AnalysisCMS::ApplyWeights()
       sf_idiso    = std_vector_lepton_idisoW->at(0)      * std_vector_lepton_idisoW->at(1)      * std_vector_lepton_idisoW->at(2);
       sf_idiso_up = std_vector_lepton_idisoW_Up->at(0)   * std_vector_lepton_idisoW_Up->at(1)   * std_vector_lepton_idisoW_Up->at(2);
       sf_idiso_do = std_vector_lepton_idisoW_Down->at(0) * std_vector_lepton_idisoW_Down->at(1) * std_vector_lepton_idisoW_Down->at(2);
+      //Debuging
+      //printf("sf_idiso lepton 2 %f", std_vector_lepton_idisoW->at(2));
     }
 
 
@@ -565,6 +577,9 @@ void AnalysisCMS::ApplyWeights()
   float sf_reco    = std_vector_lepton_recoW->at(0)      * std_vector_lepton_recoW->at(1)      * std_vector_lepton_recoW->at(2) ;
   float sf_reco_up = std_vector_lepton_recoW_Up->at(0)   * std_vector_lepton_recoW_Up->at(1)   * std_vector_lepton_recoW_Up->at(2);
   float sf_reco_do = std_vector_lepton_recoW_Down->at(0) * std_vector_lepton_recoW_Down->at(1) * std_vector_lepton_recoW_Down->at(2);
+
+  //Debuging
+   // printf ( "sf_reco lepton 2 %f", std_vector_lepton_recoW->at(2));
 
   if (_analysis.EqualTo("WZ"))
     {
@@ -585,6 +600,8 @@ void AnalysisCMS::ApplyWeights()
       sf_fastsim    = std_vector_lepton_fastsimW->at(0)      * std_vector_lepton_fastsimW->at(1)      * std_vector_lepton_fastsimW->at(2); 
       sf_fastsim_up = std_vector_lepton_fastsimW_Up->at(0)   * std_vector_lepton_fastsimW_Up->at(1)   * std_vector_lepton_fastsimW_Up->at(2); 
       sf_fastsim_do = std_vector_lepton_fastsimW_Down->at(0) * std_vector_lepton_fastsimW_Down->at(1) * std_vector_lepton_fastsimW_Down->at(2); 
+      // Debuging
+     // printf( "sf_fastsim %f", std_vector_lepton_fastsimW->at(2));
   }
 
 
@@ -606,10 +623,10 @@ void AnalysisCMS::ApplyWeights()
 
   if (_verbosity > 0)
     {
-      printf("  event_weight % f  trigger %d  metFilters %d  sf_btag %.2f  sf_trigger %.2f  sf_idiso %.2f  sf_reco %.2f  sf_fastsim %.2f  lumi %.2f  baseW %f  puW %.2f",
-	     _event_weight, PassTrigger(), ApplyMETFilters(), sf_btag, sf_trigger, sf_idiso, sf_reco, sf_fastsim, _luminosity, baseW, puW);
+ //     printf("  event_weight % f  trigger %d  metFilters %d  sf_btag %.2f  sf_trigger %.2f  sf_idiso %.2f  sf_reco %.2f  sf_fastsim %.2f  lumi %.2f  baseW %f  puW %.2f",
+	     //_event_weight, PassTrigger(), ApplyMETFilters(), sf_btag, sf_trigger, sf_idiso, sf_reco, sf_fastsim, _luminosity, baseW, puW);
       
-      if (GEN_weight_SM) printf("  GEN_weight_SM % .2f\n", GEN_weight_SM); else printf("\n");
+//      if (GEN_weight_SM) printf("  GEN_weight_SM % .2f\n", GEN_weight_SM); else printf("\n");
     }
 
 

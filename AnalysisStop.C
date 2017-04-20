@@ -76,7 +76,8 @@ void AnalysisStop::Loop(TString analysis, TString filename, float luminosity, fl
   // Loop over events
   //----------------------------------------------------------------------------
   
-  for (Long64_t jentry=0; jentry<_nentries;jentry++) {
+  for (Long64_t jentry=0; jentry<1000000;jentry++) {
+  //for (Long64_t jentry=0; jentry<_nentries;jentry++) {
 
     if (!_isminitree) {
 
@@ -117,10 +118,11 @@ void AnalysisStop::Loop(TString analysis, TString filename, float luminosity, fl
 
     if (!_isminitree) {
 
+
       if (filename.Contains("DY") && filename.Contains("LO") && !filename.Contains("HT")) 
 	if (_htgen>70.) continue;
 
-      if (!_systematic.Contains("fake") && _nlepton < 3) continue; // at least 3 leptons
+      if (!_systematic.Contains("fake") && _nlepton < 3 && _ntightlepton < 3) continue; // at least 3 tigth leptons
 //      if (!_systematic.Contains("fake") && _nlepton != 2) continue; // 2 and only 2 leptons
 //      if (_systematic.Contains("fake") && (_nlepton <= 2 || _ntightlepton>2)) continue;
       
@@ -162,6 +164,22 @@ void AnalysisStop::Loop(TString analysis, TString filename, float luminosity, fl
     //--------------------------------------------------------------------------
     bool pass = true;
 
+    //Debuging
+     //printf( " event: %i",  event);
+     //printf( "lepton genmatched->at(0) %f", std_vector_lepton_genmatched->at(0) );
+     //printf ( "lepton_genmatched->at(1) %f",std_vector_lepton_genmatched->at(1) );
+     //printf ( "lepton_genmatched->at(2) %f", std_vector_lepton_genmatched->at(2) );
+    // ----------------
+
+
+    //Debuging ------------------------
+    //printf( " event: %i",  event);
+    //printf ("sf_trigger %f", effTrigW); 
+    //printf("sf_idiso lepton 2 %f", std_vector_lepton_idisoW->at(2));
+    //printf ( "sf_reco lepton 2 %f", std_vector_lepton_recoW->at(2));
+    //printf( "sf_fastsim %f", std_vector_lepton_fastsimW->at(2));
+    //---------------------------------
+
     bool passTTZ = false;
     bool passTTZexerc = false; 
 
@@ -187,12 +205,12 @@ void AnalysisStop::Loop(TString analysis, TString filename, float luminosity, fl
       // -----------------------------------------------------------------------------
       for (int i = 0; i < 3; i++)
       {
-        if ( fabs(_m2lep[i] - Z_MASS) < fabs(_m2l)) _m2l = _m2lep[i];
+        if ( fabs(_m2lep[i] - Z_MASS) < fabs(_m2l - Z_MASS)) _m2l = _m2lep[i];
       }         
 
       if ( fabs( _m2l - Z_MASS) < 10.) passZmass = true; 
 
-      if ( passZmass && _njet > 4 && _jet_pt[0] > 40 && _jet_pt[1] > 40 && _jet_pt[2] > 40 && _jet_pt[3] > 40 &&  _trailingPtCSVv2M >= 30. && MET.Et()>=30.) passTTZexerc = true; 
+      if ( passZmass && _njet >= 4 && _jet_pt[0] > 40 && _jet_pt[1] > 40 && _jet_pt[2] > 40 && _jet_pt[3] > 40 &&  _trailingPtCSVv2M >= 30. && MET.Et()>=30.) passTTZexerc = true; 
 
       if ( passZmass && _jet_pt[0] > 20 && _trailingPtCSVv2M >= 20. && MET.Et()>= 140.) passTTZ = true; 
 
